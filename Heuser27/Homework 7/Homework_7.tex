@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,enumitem,xcolor,tcolorbox,hyperref,fancyhdr}
+\definecolor{navy}{HTML}{14213D}\definecolor{orng}{HTML}{C25B12}
+\hypersetup{colorlinks=true,urlcolor=orng}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\pagestyle{fancy}\fancyhf{}\lhead{CS CRP -- Heuser College}\rhead{Sessions 10 \& 11}\cfoot{\thepage}
+\newtcolorbox{term}[1]{colback=navy!6,colframe=navy,fonttitle=\bfseries,title=#1,boxrule=0.6pt,arc=2pt}
+\newtcolorbox{warn}{colback=orng!8,colframe=orng,boxrule=0.6pt,arc=2pt}
+\newcommand{\hw}[2]{{\Large\bfseries\color{navy} #1}\\[2pt]{\large #2}\\[-4pt]\rule{\textwidth}{1.2pt}}
+\begin{document}
+\hw{Homework 7}{Your First GitHub Repository}
+\textbf{Course:} CS CRP \quad \textbf{Based on:} Session 10 and Session 11 \quad \textbf{Builds on:} Homework 6
+
+\section*{Goal}
+Put your Homework 6 website online under your own GitHub account, organized in the exact folder structure below.
+
+\begin{term}{Key words you must know}
+\textbf{Git:} version control software on your computer that records every change to your files.\\
+\textbf{GitHub:} a website that stores Git projects online so you can share and publish them.\\
+\textbf{Repository (repo):} a project folder tracked by Git, holding your files and their full history.\\
+\textbf{Commit:} a saved set of changes with a short message describing them.\\
+\textbf{GitHub Pages:} free hosting that turns a repository of static files into a live website.
+\end{term}
+
+\section*{Part 1: Account}
+\begin{enumerate}[leftmargin=*]
+\item Create a GitHub account using your \textbf{personal email address}. Choose a professional username, since it will appear in your links.
+\item Verify the email address from the message GitHub sends you.
+\item In \textit{Settings $\rightarrow$ Emails}, add your \textbf{Heuser EDU email} to the same account and verify it too. Both emails must now appear as verified.
+\end{enumerate}
+
+\section*{Part 2: Repository}
+\begin{enumerate}[leftmargin=*,resume]
+\item Create a new \textbf{public} repository named exactly \texttt{Heuser}.
+\item Upload your files so that the structure is exactly:
+\end{enumerate}
+\begin{tcolorbox}[colback=white,colframe=navy!40,boxrule=0.5pt]
+\ttfamily
+Heuser/\\
+\hspace*{1.5em}CS\_CRP/\\
+\hspace*{3em}Homework\_6/\\
+\hspace*{4.5em}index.html\\
+\hspace*{4.5em}script.js\\
+\hspace*{4.5em}style.css
+\end{tcolorbox}
+\begin{warn}
+Folder and file names are case-sensitive. Use \texttt{CS\_CRP} and \texttt{Homework\_6} with underscores and no spaces.
+\end{warn}
+
+\section*{Part 3: Publish (needed for Homework 8)}
+Homework 8 must link to this website, so turn on GitHub Pages as shown in class.
+\begin{enumerate}[leftmargin=*,resume]
+\item In the repo, open \textit{Settings $\rightarrow$ Pages}.
+\item Deploy from the \texttt{main} branch, root folder, and save.
+\item Wait a minute, then open your link, which looks like:\\
+\texttt{https://YOUR-USERNAME.github.io/Heuser/CS\_CRP/Homework\_6/}
+\end{enumerate}
+\textbf{Check:} the page must load with its styling and script working. If it looks plain, check that the file names match what \texttt{index.html} links to.
+
+\section*{Submit}
+\begin{itemize}[leftmargin=*]
+\item Form to Submit at: \url{https://forms.gle/ULoHnmgoRnuFrQyP8}
+\item Link to your repository: \texttt{https://github.com/YOUR-USERNAME/Heuser}
+\item Link to your live Homework 6 page (the GitHub Pages link above).
+\item A screenshot of \textit{Settings $\rightarrow$ Emails} showing both verified emails.
+\end{itemize}
+
+\section*{Checklist}
+\begin{tabular}{@{}ll@{}}
+$\square$ Account made with personal email & $\square$ Heuser EDU email verified on same account\\
+$\square$ Repo named \texttt{Heuser} & $\square$ Folder path \texttt{CS\_CRP/Homework\_6}\\
+$\square$ Three files uploaded & $\square$ GitHub Pages link works\\
+\end{tabular}
+\end{document}

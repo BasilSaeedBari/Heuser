@@ -1,0 +1,227 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,urlcolor=blue!60!black,linkcolor=black]{hyperref}
+
+\definecolor{accent}{HTML}{14213D}
+\definecolor{gold}{HTML}{FCA311}
+\titleformat{\section}{\Large\bfseries\color{accent}}{}{0em}{}[{\color{gold}\titlerule[1.2pt]}]
+\titleformat{\subsection}{\large\bfseries\color{accent}}{}{0em}{}
+\titlespacing*{\section}{0pt}{14pt}{8pt}
+\setlist{itemsep=2pt,topsep=4pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\pagestyle{fancy}\fancyhf{}
+\lhead{\small CS CRP -- Heuser College}\rhead{\small Homework 9}\cfoot{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newtcolorbox{note}[1][Note]{colback=gold!12,colframe=gold!80!black,title=#1,fonttitle=\bfseries,boxrule=0.6pt,arc=2pt}
+\newtcolorbox{warn}[1][Warning]{colback=red!5,colframe=red!60!black,title=#1,fonttitle=\bfseries,boxrule=0.6pt,arc=2pt}
+
+\begin{document}
+
+{\Huge\bfseries\color{accent} Homework 9}\\[4pt]
+{\LARGE Your Own Web Server on Render}\\[6pt]
+{\large\bfseries Course:} CS CRP \quad {\large\bfseries Based on:} Homework 6, 7 and 8 \quad {\large\bfseries Requires:} Homework 6, 7 and 8 \\
+{\large\bfseries Due:} \textcolor{red}{20th November 2026}
+
+\section{Goal}
+Until now your websites were \textbf{static}: GitHub Pages only hands out files. In this homework you will write a real \textbf{backend server} in Python and put it on the internet. One server, one web address, four pages: a home page, your game (Homework 6), your portfolio (Homework 8) and a brand new page that shows live data from a free API.
+
+\begin{center}
+\begin{tabularx}{0.9\textwidth}{>{\ttfamily}l X}
+\toprule
+\rmfamily\bfseries Address & \bfseries What the visitor sees\\
+\midrule
+yourname.onrender.com/ & Home page with three buttons, one for each page below\\
+yourname.onrender.com/game & Your Homework 6 game\\
+yourname.onrender.com/portfolio & Your Homework 8 portfolio\\
+yourname.onrender.com/api & NEW: your live data page (Homework 9)\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Key words you must know}
+\textbf{Backend (server):} a program that waits for visitors' requests and decides what to send back.\\
+\textbf{Route:} a path on your website, like /game, that your backend connects to a response.\\
+\textbf{Web service:} a backend that stays running on the internet so anyone can visit it.\\
+\textbf{Render:} a hosting company with a free plan that runs web services from a GitHub repository.\\
+\textbf{Deploy:} to publish your project so it runs online.\\
+\textbf{API:} a service that sends data to programs (usually as JSON) instead of web pages for people.\\
+\textbf{API key:} a secret password that some APIs need before they give you data.\\
+\textbf{Environment variable:} a secret setting stored on the host (Render), never inside your code files.\\
+\textbf{Requirements file:} a list of the Python libraries your server needs, so Render can install them.\\
+\textbf{Build command / Start command:} what Render runs to install your project, and what it runs to start it.\\
+\textbf{Coding agent:} an AI tool that writes, edits and fixes code from your instructions.
+
+\section{Required}
+\begin{enumerate}
+\item \textbf{Python backend.} Write one backend in any Python web framework you like (for example FastAPI, Flask, Django or another). It must run on Render's free plan.
+\item \textbf{Four routes.} The home page at \texttt{/}, your game at \texttt{/game}, your portfolio at \texttt{/portfolio}, and your new page at \texttt{/api}.
+\item \textbf{Home page.} A simple, good-looking page with three buttons that take the visitor to \texttt{/game}, \texttt{/portfolio} and \texttt{/api}.
+\item \textbf{Game and portfolio keep working.} Homework 6 and Homework 8 must look and behave exactly as before when opened from the new addresses. Your portfolio must still link to your Homework 7 site.
+\item \textbf{New API page.} Pick a free public API, get data from it, and show that data in a \textbf{unique} way on \texttt{/api}. It must show a loading message and a friendly error message if the data cannot be loaded.
+\item \textbf{No weather APIs.} Weather was covered in class. Anything that gives weather, temperature or forecasts is not allowed.
+\item \textbf{No secrets in GitHub.} Your repository is public. If your API needs a key, store it as an environment variable on Render.
+\item \textbf{Use a coding agent.} Use one of: Codex, Antigravity, OpenClaw, OpenCode, Freebuff, DeepAI Code, Kilo or Cursor. You must be able to explain every file it wrote.
+\item \textbf{Live on Render} from your existing \texttt{Heuser} GitHub repository, with a public link that works.
+\end{enumerate}
+
+\section{Part 1: Choose your API and your idea}
+\begin{enumerate}
+\item Browse free API lists and pick \textbf{one} API you find interesting. Ideas: PokeAPI, Open Library, REST Countries, Rick and Morty API, Open Trivia Database, Art Institute of Chicago, NASA, Jikan (anime), Cat or Dog image APIs, or any other you discover.
+\item Check three things before you commit: it is \textbf{free}, it is \textbf{not weather}, and it does \textbf{not ask for a credit card}.
+\item Read its documentation page and find out: what address do I ask, what data comes back, and do I need a key?
+\item If it needs a key, register on the API's website and keep the key private. Do not send it to anyone and do not put it in any file.
+\item Write down your page idea in 3--4 sentences before you start building.
+\end{enumerate}
+
+\begin{note}[What does ``unique form'' mean?]
+Do not just print a table, a list or raw JSON. Turn the data into something with its own personality: a game, a map, a card collection, a timeline, a machine, a poster wall. Think about how the data wants to be shown.\\[2pt]
+\textbf{Example you may NOT use:} Show countries as floating bubbles, where bigger bubbles mean bigger populations, and clicking a bubble opens that country's facts. It is shown only to explain the thinking. Come up with your own.
+\end{note}
+
+\section{Part 2: Prepare your GitHub repository}
+You will \textbf{extend} your existing \texttt{Heuser} repository from Homework 7. Do not create a new repository.
+
+\begin{warn}[Do not touch Homework 6 and Homework 8 folders]
+Your Homework 8 portfolio links to your Homework 7 GitHub Pages site. If you move or rename \texttt{Homework\_6} or \texttt{Homework\_8}, those links break. Leave them exactly as they are and make \textbf{copies} inside the new folder.
+\end{warn}
+
+\begin{enumerate}
+\item Make sure you have Git or GitHub Desktop on your computer, and that your \texttt{Heuser} repository is downloaded (cloned) to it. Ask your coding agent or use the GitHub Desktop ``Clone repository'' button if you are not sure.
+\item Inside \texttt{CS\_CRP}, create a new folder named exactly \texttt{Homework\_9}.
+\item Inside it, organize your project like this:
+\end{enumerate}
+
+\begin{center}
+\begin{minipage}{0.7\textwidth}
+\ttfamily
+Heuser/\\
+\hspace*{1.2em}CS\_CRP/\\
+\hspace*{2.4em}Homework\_6/ \hfill\rmfamily(do not change)\ttfamily\\
+\hspace*{2.4em}Homework\_8/ \hfill\rmfamily(do not change)\ttfamily\\
+\hspace*{2.4em}Homework\_9/\\
+\hspace*{3.6em}your backend file(s)\\
+\hspace*{3.6em}requirements file\\
+\hspace*{3.6em}home/ \hfill\rmfamily(home page files)\ttfamily\\
+\hspace*{3.6em}game/ \hfill\rmfamily(copy of Homework 6 files)\ttfamily\\
+\hspace*{3.6em}portfolio/ \hfill\rmfamily(copy of Homework 8 files)\ttfamily\\
+\hspace*{3.6em}api/ \hfill\rmfamily(new page files)\ttfamily
+\end{minipage}
+\end{center}
+
+\begin{enumerate}[resume]
+\item Add a \texttt{.gitignore} file so that private files (keys, virtual environment folders, cache folders) are never uploaded. Your coding agent can write this for you.
+\item Use the exact folder names above, in small letters. Folder and file names are case-sensitive on Render.
+\end{enumerate}
+
+\section{Part 3: Build the backend with your coding agent}
+Work in small steps and test after every step. Do not ask for everything in one giant request.
+
+\begin{enumerate}
+\item \textbf{Step 1: Hello server.} Ask the agent to create a minimal Python backend with one route that shows ``Hello''. Run it on your own computer and open it in your browser.
+\item \textbf{Step 2: Home page.} Add the \texttt{/} route with your three buttons. The buttons can be plain links for now.
+\item \textbf{Step 3: Game.} Add \texttt{/game}. Open it and play. If it looks plain or does nothing, the CSS and JavaScript files are not being found. Ask the agent to fix the file paths.
+\item \textbf{Step 4: Portfolio.} Add \texttt{/portfolio} and check that all images, fonts, animations and links still work.
+\item \textbf{Step 5: API page.} Build \texttt{/api}. Decide with your agent whether your server fetches the data and passes it to the page, or whether the page fetches it directly. If your API needs a key, it must be your server that fetches it, so the key stays hidden.
+\item \textbf{Step 6: Requirements file.} Make sure every library your server needs is listed in the requirements file. Render only installs what is listed there.
+\item \textbf{Step 7: Polish.} Add a friendly error page for addresses that do not exist, and make sure all pages have a way back to the home page.
+\end{enumerate}
+
+\begin{note}[Two things Render needs from your server]
+(1) The server must listen on the port number that Render gives it, which is provided as an environment variable called \texttt{PORT}. (2) It must listen on all network addresses, not only your own computer. Tell your coding agent about both of these from the start.
+\end{note}
+
+\subsection*{Tips for working with AI}
+\begin{itemize}
+\item Describe your idea in detail: the API, the data you want, how it should look, what should animate.
+\item Tell the agent which Python framework you want and that the project must run on Render's free plan.
+\item Commit to Git after every working step so you can go back if something breaks.
+\item If the agent gets confused or forgets things, start a fresh agent and share only the files it needs.
+\end{itemize}
+
+\section{Part 4: Upload your project to GitHub}
+\begin{enumerate}
+\item Open GitHub Desktop (or ask your coding agent to guide you through Git) and look at the list of changed files. You should see the new \texttt{Homework\_9} folder and nothing from Homework 6 or 8 changed.
+\item Check that no file contains your API key.
+\item Write a short commit message such as ``Add Homework 9 backend'' and commit.
+\item Push the commit to GitHub, to the \texttt{main} branch.
+\item Open your repository on github.com and confirm that \texttt{CS\_CRP/Homework\_9} is there with all folders.
+\end{enumerate}
+
+\section{Part 5: Publish on Render}
+\begin{enumerate}
+\item Go to \href{https://render.com}{render.com} and choose \textbf{Sign up}. Use the option \textbf{Sign up with GitHub}, so Render can see your repositories.
+\item In the dashboard, click \textbf{New} and choose \textbf{Web Service}.
+\item Choose to build from a \textbf{Git repository}. If you do not see \texttt{Heuser}, click the link to configure GitHub access and allow Render to read the \texttt{Heuser} repository only.
+\item Select your \texttt{Heuser} repository.
+\item Fill in the settings:
+\begin{itemize}
+\item \textbf{Name:} short and clean, because it becomes your address (\texttt{name.onrender.com}).
+\item \textbf{Language / Runtime:} Python 3.
+\item \textbf{Branch:} \texttt{main}.
+\item \textbf{Root Directory:} \texttt{CS\_CRP/Homework\_9}. This tells Render that your server lives inside that folder, not at the top of the repository.
+\item \textbf{Build Command:} the command that installs everything in your requirements file. Ask your coding agent which exact command fits your project.
+\item \textbf{Start Command:} the command that starts your server. It depends on your framework, so ask your coding agent for the correct one.
+\item \textbf{Instance Type:} choose \textbf{Free}.
+\end{itemize}
+\item If your API needs a key, open \textbf{Environment Variables}, add a variable with the same name your server expects, and paste the key as its value.
+\item Click \textbf{Create Web Service} and watch the logs. The first deploy takes a few minutes. When it finishes, the status shows \textbf{Live}.
+\item Open your \texttt{onrender.com} address and test all four pages.
+\item If the deploy fails, read the red error in the logs, copy it, and give it to your coding agent along with the file it mentions. Fix, commit, push, and Render redeploys automatically.
+\end{enumerate}
+
+\begin{note}[Free plan facts]
+Render's free web services go to sleep when nobody visits for a while. The first visit after sleeping can take up to a minute to load. This is normal. Open your site once a few minutes before you submit, so it is awake when it is checked.
+\end{note}
+
+\section{Part 6: Final test on the live link}
+\begin{itemize}
+\item Open every page on your phone as well as your computer.
+\item Click every button on the home page and make sure there is a way back.
+\item Play the game from start to finish.
+\item Check that the portfolio images, fonts and animations work, and that the link to your Homework 7 site still opens.
+\item Turn off your internet briefly and reload \texttt{/api} to see your error message.
+\item Open a random wrong address, like \texttt{/hello}, and check that it does not show an ugly crash.
+\end{itemize}
+
+\section{Bonus points}
+\begin{itemize}
+\item Your server remembers recent API answers for a short time, so it does not ask the API again for every visitor.
+\item A search box or filter on your API page that lets visitors explore the data.
+\item A custom, themed 404 page.
+\item Showing a second free API on the same page, combined in a creative way.
+\end{itemize}
+
+\section{Submit}
+\begin{itemize}
+\item Form link: \textcolor{red}{[\url{https://forms.gle/oPnteXgbXbJpuW366}]}
+\item Your live Render link (for example \texttt{https://name.onrender.com}).
+\item Your GitHub repository link and the link to your \texttt{CS\_CRP/Homework\_9} folder.
+\item The name of the Python framework you used, the coding agent you used, and the API you chose.
+\item A screenshot of your Render dashboard showing the service as \textbf{Live}.
+\item Two or three sentences explaining your API page idea and why it is unique. This must also be written on the \texttt{/api} page itself.
+\end{itemize}
+
+\section{Checklist}
+\begin{tabularx}{\textwidth}{X X}
+$\square$ Python backend, runs on Render & $\square$ Home page with 3 buttons\\
+$\square$ \texttt{/game} works like Homework 6 & $\square$ \texttt{/portfolio} works like Homework 8\\
+$\square$ \texttt{/api} shows live data in a unique form & $\square$ Not a weather API\\
+$\square$ Loading and error messages & $\square$ No API keys in GitHub\\
+$\square$ Homework 6 and 8 folders untouched & $\square$ Coding agent used and named\\
+$\square$ Live Render link works & $\square$ Concept text written on \texttt{/api}\\
+\end{tabularx}
+
+\end{document}

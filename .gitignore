@@ -1,0 +1,12 @@
+# Unrelated local folders in parent workspace
+CRP2026-7/
+Mascot/
+
+# Build & runtime artifacts
+*.exe
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Heuser27 runtime state (persisted in Docker volume /app/data)
+Heuser27/data/

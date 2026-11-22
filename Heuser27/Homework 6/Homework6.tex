@@ -1,0 +1,137 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=0.8in,top=0.7in,bottom=0.7in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[scaled=0.95]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2F5BEA}
+\definecolor{soft}{HTML}{EEF2FE}
+\definecolor{warn}{HTML}{FFF4E0}
+\definecolor{warnline}{HTML}{E59A12}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist{nosep,leftmargin=1.3em,itemsep=2pt}
+\renewcommand{\arraystretch}{1.2}
+\pagestyle{empty}
+
+\newcommand{\sectionhead}[1]{\Needspace{9\baselineskip}\vspace{5pt}{\large\bfseries\color{accent}#1}\par\vspace{1pt}{\color{accent}\hrule height 0.8pt}\vspace{4pt}}
+
+\newtcolorbox{infobox}[1][]{colback=soft,colframe=accent,boxrule=0.6pt,arc=3pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{warnbox}[1][]{colback=warn,colframe=warnline,boxrule=0.6pt,arc=3pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+
+\begin{document}
+
+% ---------- Title ----------
+\begin{tcolorbox}[colback=accent,colframe=accent,arc=4pt,left=10pt,right=10pt,top=6pt,bottom=6pt]
+{\color{white}
+{\Large\bfseries Homework 6: Build a Complete Program with AI Agents}\\[2pt]
+|\; CS CRP \;|\; Due: 29th October - 11:59 PM |\;  \\ Submission Link: \url{https://forms.gle/fyEgXPzduR94yhgt8} {\hspace{0.1cm}}
+}
+\end{tcolorbox}
+
+\sectionhead{1. The Mission}
+In class you learned that tokens are our currency, and that the smart way to spend them is
+\textbf{plan smart, build cheap, start fresh}. Now you will prove it.
+Your job: build \textbf{one small interactive program} that runs in a web browser, using the
+\textbf{5-step prompt process} from the lecture:
+\begin{center}
+\textbf{Core Logic} $\rightarrow$ \textbf{Visual Vibe} $\rightarrow$ \textbf{Sensory Feedback} $\rightarrow$ \textbf{State \& Storage} $\rightarrow$ \textbf{Debugging}
+\end{center}
+
+\sectionhead{2. Pick Your Project}
+Choose \textbf{one}. Keep it small. A finished simple project beats a broken ambitious one.
+\begin{itemize}
+  \item \textbf{A. Catch Game:} Things fall from the top. The player moves something to catch the good ones and dodge the bad ones.
+  \item \textbf{B. Virtual Pet:} A creature on screen that gets hungry, happy, or sleepy, and reacts to what the player does.
+  \item \textbf{C. Pattern Memory:} The game shows a growing sequence of colors or shapes. The player must repeat it.
+\end{itemize}
+
+\sectionhead{3. The Hard Rules}
+\begin{warnbox}
+\begin{itemize}
+  \item \textbf{No assets.} No image files, sound files, downloaded fonts, or libraries. Everything must be created by \emph{code}: CSS shapes, inline SVG, or drawing on a \texttt{\textless canvas\textgreater}.
+  \item Sound is allowed \emph{only} if the code generates it (for example, the Web Audio API).
+  \item Your final program is exactly \textbf{three code files}: one HTML, one CSS, one JavaScript.
+  \item It must work by double-clicking the HTML file, with no internet.
+\end{itemize}
+\end{warnbox}
+
+\sectionhead{4. The Process: Repeat This Loop for All 5 Stages}
+\begin{enumerate}[label=\textbf{Step \Alph*.},leftmargin=3.6em,itemsep=3pt]
+  \item \textbf{Architect.} Open a \textbf{new agent} with your smartest, highest-reasoning model. Ask it for a long, detailed plan for \emph{this stage only}. Save the plan.
+  \item \textbf{Builder.} Open \textbf{another new agent} with a faster, cheaper model. Give it your plan and your current code. It builds \emph{only} this stage.
+  \item \textbf{Test.} Open the page in your browser. Check the ``Done when'' column below. If it fails, fix it before moving on.
+\end{enumerate}
+Then move to the next stage with \textbf{fresh agents again}. Never reuse a cluttered agent across stages.
+
+\begin{infobox}
+\textbf{Tips.} (1) Do not paste all five stages into one giant request. That breaks Golden Rule 1.
+(2) If an agent starts forgetting things or making things up, its context window is full. Start a fresh one.
+(3) Test after \emph{every} stage, not just at the end.
+(4) Keep your tokens in mind: share only the files and plan the agent needs.
+\end{infobox}
+
+\Needspace{22\baselineskip}
+\sectionhead{5. The Five Stages}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\raggedright\arraybackslash}p{2.1cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+\toprule
+\normalfont\bfseries Stage & \bfseries Your plan must cover & \bfseries Done when \\
+\midrule
+1. Core Logic & The rules, the controls, how scoring or winning works, how the game starts, ends, and repeats. Plain rectangles and text are fine. & Someone can play from start to finish. It is ugly, but it works. \\
+\addlinespace
+2. Visual Vibe & A theme, a color palette, the layout, and how each thing on screen is drawn with code. Do not change the rules. & It looks like a real theme, and the project folder has zero image files. \\
+\addlinespace
+3. Sensory Feedback & Animations, particles or movement effects, hover and press responses, and code-made sounds. Include a mute button. & Every important action gives the player a visible or audible reaction. \\
+\addlinespace
+4. State \& Storage & Which data must be remembered (high score, settings, progress), where it is saved, and the game states (menu, playing, paused, over). Include a reset-data button. & Refresh the page and your data is still there. Pause and restart work. \\
+\addlinespace
+5. Debugging & A list of edge cases to attack: rapid clicking, resizing the window, switching tabs, unexpected input, broken saved data. Also final polish. & You found and fixed \textbf{at least 3 real bugs} and listed them in Plan 5. \\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\sectionhead{6. What to Submit: Exactly 6 Files}
+\begin{tabularx}{\textwidth}{@{}>{\ttfamily}l X@{}}
+Plan\_1.md & The Architect's plan for Stage 1 (Core Logic) \\
+Plan\_2.md & The Architect's plan for Stage 2 (Visual Vibe) \\
+Plan\_3.md & The Architect's plan for Stage 3 (Sensory Feedback) \\
+Plan\_4.md & The Architect's plan for Stage 4 (State \& Storage) \\
+Plan\_5.md & The Architect's plan for Stage 5 (Debugging), plus your bug list \\
+HW6\_YourName\_[HEUSERID].zip & Contains only \texttt{index.html}, \texttt{style.css}, and \texttt{script.js}. No folders, no other files. \\
+\end{tabularx}
+
+\vspace{3pt}
+\textbf{Every plan file starts with these 3 lines:}
+\begin{infobox}
+\ttfamily\small
+Stage: (name)\\
+Architect model: (name)\qquad Builder model: (name)\\
+Result: (1--2 sentences: what worked, what broke, how you fixed it)
+\end{infobox}
+Then paste the full plan below them. Plans should be detailed, not one sentence.
+Plan 5 also needs your bug list: for each bug, write what happened and how you fixed it.
+
+\sectionhead{7. Grading (100 points)}
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+\toprule
+\textbf{Category} & \textbf{Points} \\
+\midrule
+Plans 1--5: detailed, specific, and match their stage (8 each) & 40 \\
+Final program works and is fun to use & 30 \\
+Follows the hard rules: 6 files only, no assets, 3 code files & 15 \\
+Golden rules visible: different Architect and Builder models, one task per agent, fresh agents per stage & 15 \\
+\bottomrule
+\end{tabularx}
+
+
+\end{document}

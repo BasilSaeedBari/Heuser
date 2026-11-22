@@ -1,0 +1,6 @@
+*.exe
+data/*.db
+data/*.db-*
+data/hw6_games/
+data/uploads/
+.git/

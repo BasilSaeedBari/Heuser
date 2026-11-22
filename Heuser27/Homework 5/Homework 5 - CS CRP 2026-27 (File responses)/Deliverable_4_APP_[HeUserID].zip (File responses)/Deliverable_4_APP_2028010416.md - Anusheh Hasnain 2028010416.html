@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper Library & Knowledge Graph (ID: 2028010416)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        #network-canvas {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #e5e7eb;
+            background-color: #fafafa;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-slate-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="book-open-check" class="w-8 h-8 text-indigo-400"></i>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide">ScholarGraph Studio</h1>
+                    <p class="text-xs text-slate-400">Research Paper Library & Knowledge Graph | User ID: 2028010416</p>
+                </div>
+            </div>
+            <div class="flex space-x-2">
+                <button onclick="switchTab('library')" id="tab-btn-library" class="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition">Library Dashboard</button>
+                <button onclick="switchTab('graph')" id="tab-btn-graph" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Knowledge Graph Visualizer</button>
+                <button onclick="switchTab('ingest')" id="tab-btn-ingest" class="px-4 py-2 rounded-lg text-sm font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Ingest Paper</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6">
+
+        <!-- TAB 1: LIBRARY DASHBOARD -->
+        <section id="tab-library" class="space-y-6">
+            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex space-x-4 flex-1 max-w-md">
+                    <div class="relative w-full">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+                        <input type="text" id="search-input" onkeyup="filterLibrary()" placeholder="Search paper title, author, or topic..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="seedSampleData()" class="px-3 py-2 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg text-sm hover:bg-emerald-100 flex items-center space-x-1 font-medium">
+                        <i data-lucide="database-backup" class="w-4 h-4"></i>
+                        <span>Load Preset Papers</span>
+                    </button>
+                    <span id="paper-count" class="text-xs bg-slate-100 text-slate-600 px-3 py-2 rounded-lg font-medium">0 Papers Loaded</span>
+                </div>
+            </div>
+
+            <!-- Library Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-100 text-slate-600 text-xs font-semibold uppercase tracking-wider border-b border-slate-200">
+                        <tr>
+                            <th class="p-4">Title & Venue</th>
+                            <th class="p-4">Authors</th>
+                            <th class="p-4">Year</th>
+                            <th class="p-4">Identifier</th>
+                            <th class="p-4">Topics</th>
+                            <th class="p-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="library-table-body" class="divide-y divide-slate-100 text-sm">
+                        <tr>
+                            <td colspan="6" class="p-8 text-center text-slate-400">No papers in library. Click "Load Preset Papers" or ingest a new paper to populate.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TAB 2: KNOWLEDGE GRAPH VISUALIZER -->
+        <section id="tab-graph" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex justify-between items-center">
+                <div class="flex items-center space-x-6">
+                    <span class="text-sm font-semibold text-slate-700">Filter Nodes:</span>
+                    <label class="flex items-center space-x-2 text-xs font-medium cursor-pointer">
+                        <input type="checkbox" id="filter-paper" checked onchange="renderGraph()" class="rounded text-indigo-600">
+                        <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded">Papers</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-xs font-medium cursor-pointer">
+                        <input type="checkbox" id="filter-author" checked onchange="renderGraph()" class="rounded text-emerald-600">
+                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded">Authors</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-xs font-medium cursor-pointer">
+                        <input type="checkbox" id="filter-topic" checked onchange="renderGraph()" class="rounded text-amber-600">
+                        <span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded">Topics</span>
+                    </label>
+                </div>
+                <div class="text-xs text-slate-500">
+                    <span>Interactive Controls: Drag to reposition, Scroll to Zoom, Click to view node detail</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4">
+                <div class="col-span-3">
+                    <div id="network-canvas"></div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                    <h3 class="font-bold text-sm text-slate-800 border-b pb-2">Node Information</h3>
+                    <div id="node-details" class="text-xs space-y-2 text-slate-600">
+                        <p class="italic text-slate-400">Click any node in the graph to inspect its properties and relationships.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: INGEST PAPER -->
+        <section id="tab-ingest" class="hidden max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-6">
+            <div>
+                <h2 class="text-lg font-bold text-slate-800">Ingest New Research Paper</h2>
+                <p class="text-xs text-slate-500">Extract text structures or populate metadata automatically via ID patterns.</p>
+            </div>
+
+            <form onsubmit="handlePaperIngest(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Paper Title *</label>
+                    <input type="text" id="input-title" required placeholder="e.g., Attention Is All You Need" class="w-full p-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Identifier (DOI / arXiv ID)</label>
+                        <input type="text" id="input-id" placeholder="e.g., 1706.03762" class="w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Publication Year</label>
+                        <input type="number" id="input-year" placeholder="2017" class="w-full p-2 border rounded-lg text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Authors (Comma Separated) *</label>
+                    <input type="text" id="input-authors" required placeholder="Ashish Vaswani, Noam Shazeer, Niki Parmar" class="w-full p-2 border rounded-lg text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Venue / Journal</label>
+                    <input type="text" id="input-venue" placeholder="NeurIPS, IEEE TPAMI, arXiv" class="w-full p-2 border rounded-lg text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Topics / Keywords (Comma Separated)</label>
+                    <input type="text" id="input-topics" placeholder="Transformer, Deep Learning, Natural Language Processing" class="w-full p-2 border rounded-lg text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Abstract Text</label>
+                    <textarea id="input-abstract" rows="4" placeholder="Enter paper abstract text..." class="w-full p-2 border rounded-lg text-sm"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition">Add Paper to Library & Knowledge Graph</button>
+            </form>
+        </section>
+
+    </main>
+
+    <script>
+        // State Management
+        let papers = [];
+        let network = null;
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Switch Tabs
+        function switchTab(tabName) {
+            ['library', 'graph', 'ingest'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`tab-btn-${t}`).classList.replace('bg-indigo-600', 'bg-slate-800');
+                document.getElementById(`tab-btn-${t}`).classList.replace('text-white', 'text-slate-300');
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-btn-${tabName}`).classList.replace('bg-slate-800', 'bg-indigo-600');
+            document.getElementById(`tab-btn-${tabName}`).classList.replace('text-slate-300', 'text-white');
+
+            if (tabName === 'graph') {
+                renderGraph();
+            }
+        }
+
+        // Seed Preset Test Data
+        function seedSampleData() {
+            papers = [
+                {
+                    id: "1706.03762",
+                    title: "Attention Is All You Need",
+                    authors: ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit"],
+                    year: 2017,
+                    venue: "NeurIPS",
+                    identifier: "10.48550/arXiv.1706.03762",
+                    topics: ["Transformer", "Self-Attention", "Deep Learning"],
+                    abstract: "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks."
+                },
+                {
+                    id: "2005.14165",
+                    title: "Language Models are Few-Shot Learners",
+                    authors: ["Tom Brown", "Benjamin Mann", "Nick Ryder", "Ashish Vaswani"],
+                    year: 2020,
+                    venue: "NeurIPS",
+                    identifier: "arXiv:2005.14165",
+                    topics: ["Language Models", "GPT-3", "Deep Learning"],
+                    abstract: "Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text."
+                },
+                {
+                    id: "1512.03385",
+                    title: "Deep Residual Learning for Image Recognition",
+                    authors: ["Kaiming He", "Xiangyu Zhang", "Shaoqing Ren", "Jian Sun"],
+                    year: 2016,
+                    venue: "IEEE CVPR",
+                    identifier: "10.1109/CVPR.2016.90",
+                    topics: ["Computer Vision", "ResNet", "Deep Learning"],
+                    abstract: "Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks."
+                }
+            ];
+            updateLibraryTable();
+            switchTab('library');
+        }
+
+        // Render Library Table
+        function updateLibraryTable() {
+            const tbody = document.getElementById('library-table-body');
+            document.getElementById('paper-count').innerText = `${papers.length} Papers Loaded`;
+
+            if (papers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">No papers in library. Click "Load Preset Papers" or ingest a new paper.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = papers.map(p => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="p-4 font-medium text-slate-900">
+                        <div>${p.title}</div>
+                        <div class="text-xs text-slate-400 font-normal">${p.venue || 'Unknown Venue'}</div>
+                    </td>
+                    <td class="p-4 text-xs text-slate-600">${p.authors.join(', ')}</td>
+                    <td class="p-4 text-xs font-medium text-slate-700">${p.year}</td>
+                    <td class="p-4 text-xs font-mono text-indigo-600">${p.identifier || 'N/A'}</td>
+                    <td class="p-4">
+                        <div class="flex flex-wrap gap-1">
+                            ${p.topics.map(t => `<span class="text-[10px] bg-slate-100 text-slate-600 border px-1.5 py-0.5 rounded">${t}</span>`).join('')}
+                        </div>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button onclick="deletePaper('${p.id}')" class="text-xs text-red-500 hover:text-red-700 font-medium">Remove</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Filter Library Papers
+        function filterLibrary() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('#library-table-body tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        // Delete Paper
+        function deletePaper(id) {
+            papers = papers.filter(p => p.id !== id);
+            updateLibraryTable();
+        }
+
+        // Handle Form Ingest
+        function handlePaperIngest(e) {
+            e.preventDefault();
+            const newPaper = {
+                id: document.getElementById('input-id').value || `paper-${Date.now()}`,
+                title: document.getElementById('input-title').value,
+                authors: document.getElementById('input-authors').value.split(',').map(s => s.trim()),
+                year: parseInt(document.getElementById('input-year').value) || new Date().getFullYear(),
+                venue: document.getElementById('input-venue').value || 'Ingested Reference',
+                identifier: document.getElementById('input-id').value || 'Local Ingest',
+                topics: document.getElementById('input-topics').value ? document.getElementById('input-topics').value.split(',').map(s => s.trim()) : ['General'],
+                abstract: document.getElementById('input-abstract').value || ''
+            };
+
+            papers.push(newPaper);
+            updateLibraryTable();
+            e.target.reset();
+            switchTab('library');
+        }
+
+        // Render Force-Directed Knowledge Graph
+        function renderGraph() {
+            const showPaper = document.getElementById('filter-paper').checked;
+            const showAuthor = document.getElementById('filter-author').checked;
+            const showTopic = document.getElementById('filter-topic').checked;
+
+            const nodesMap = new Map();
+            const edges = [];
+
+            papers.forEach(p => {
+                if (showPaper) {
+                    nodesMap.set(p.id, { id: p.id, label: p.title, group: 'paper', title: `Paper: ${p.title}` });
+                }
+
+                if (showAuthor) {
+                    p.authors.forEach(a => {
+                        const authorId = `author-${a}`;
+                        if (!nodesMap.has(authorId)) {
+                            nodesMap.set(authorId, { id: authorId, label: a, group: 'author', title: `Author: ${a}` });
+                        }
+                        if (showPaper) {
+                            edges.push({ from: authorId, to: p.id, label: 'AUTHORED', color: { color: '#10b981' } });
+                        }
+                    });
+
+                    // Materialize Co-authorship Edges
+                    for (let i = 0; i < p.authors.length; i++) {
+                        for (let j = i + 1; j < p.authors.length; j++) {
+                            edges.push({
+                                from: `author-${p.authors[i]}`,
+                                to: `author-${p.authors[j]}`,
+                                label: 'CO_AUTHORED_WITH',
+                                font: { size: 8 },
+                                color: { color: '#3b82f6', opacity: 0.4 }
+                            });
+                        }
+                    }
+                }
+
+                if (showTopic) {
+                    p.topics.forEach(t => {
+                        const topicId = `topic-${t}`;
+                        if (!nodesMap.has(topicId)) {
+                            nodesMap.set(topicId, { id: topicId, label: t, group: 'topic', title: `Topic: ${t}` });
+                        }
+                        if (showPaper) {
+                            edges.push({ from: p.id, to: topicId, label: 'HAS_TOPIC', color: { color: '#f59e0b' } });
+                        }
+                    });
+                }
+            });
+
+            const container = document.getElementById('network-canvas');
+            const data = {
+                nodes: Array.from(nodesMap.values()),
+                edges: edges
+            };
+
+            const options = {
+                groups: {
+                    paper: { color: { background: '#818cf8', border: '#4f46e5' }, shape: 'box', font: { color: '#ffffff' } },
+                    author: { color: { background: '#6ee7b7', border: '#059669' }, shape: 'ellipse' },
+                    topic: { color: { background: '#fde047', border: '#d97706' }, shape: 'diamond' }
+                },
+                physics: {
+                    barnesHut: { gravitationalConstant: -3000, springLength: 95 }
+                }
+            };
+
+            network = new vis.Network(container, data, options);
+
+            network.on("click", function (params) {
+                if (params.nodes.length > 0) {
+                    const nodeId = params.nodes[0];
+                    const node = nodesMap.get(nodeId);
+                    const detailsDiv = document.getElementById('node-details');
+                    detailsDiv.innerHTML = `
+                        <div class="space-y-1">
+                            <span class="px-2 py-0.5 text-[10px] font-semibold uppercase rounded bg-slate-100 text-slate-700">${node.group}</span>
+                            <p class="font-bold text-sm text-slate-900">${node.label}</p>
+                            <p class="text-[11px] text-slate-500">Node Internal Identifier: <br><code class="font-mono text-indigo-600">${node.id}</code></p>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        // Initial Load Seed
+        seedSampleData();
+    </script>
+</body>
+</html>

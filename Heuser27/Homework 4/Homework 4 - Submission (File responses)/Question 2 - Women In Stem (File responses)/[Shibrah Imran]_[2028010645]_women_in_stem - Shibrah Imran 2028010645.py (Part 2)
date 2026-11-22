@@ -1,0 +1,101 @@
+import random
+import time
+score = 0
+
+print("Welcome to the trivia quiz. Let's test your knowledge about WOMEN IN STEM!Enter 'quit' if you do not wnat to play any longer.")
+time.sleep(1.00)
+while True:
+    question = random.randint(1,9)
+    
+    if question == 1 :
+        print("Who is known as the 'Mother of Internet'?")
+        print("A) Marie Curie B) Jane Austen C) Radia Perlman  D)Rosalind Franklin")
+        answer = input ("Your answer : ")
+        if answer.upper() == "C":
+            print("Correct!")
+            score = score + 1
+        else:
+            print("Wrong!")
+    elif question == 2 :
+        print("Who was the first computer programmer?")
+        print("A) Marie Curie B) Ada Lovelace C) Radia Perlman  D)Dr. Nergis Mavalvala")
+        answer = input ("Your answer : ")
+        if answer.upper() == "B":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+                
+    elif question == 3 :
+        print("Who was the first woman to win a Nobel Prize?")
+        print("A) Marie Curie B) Ada Lovelace C) Grace Hopper D)Harriet Tubman")
+        answer = input ("Your answer : ")
+        if answer.upper() == "A":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+                
+    elif question == 4 :
+        print("Who was known as the ' Queen of Code?")
+        print("A) Marie Curie B) Ada Lovelace C) Radia Perlman  D) Grace Hopper")
+        answer = input ("Your answer : ")
+        if answer.upper() == "D":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+    elif question == 5 :
+        print("Who is a Pakistani- American awarded with MacArthur Fellowship?")
+        print("A) Malala B) Dr. Nergis Mavalvala C) Maria Sadiq D) Dr. Shaista")
+        answer = input ("Your answer : ")
+        if answer.upper() == "B":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+    elif question == 6:
+        print("Who is a pioneer in detection of graviational waves?")
+        print("A) Maria Sadiq B) Ada Lovelace C) Radia Perlman  D) Dr. Nergis")
+        answer = input ("Your answer : ")
+        if answer.upper() == "D":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+    elif question == 7 :
+        print("Who was the first person to win 2 nobel prizes?")
+        print("A) Ada Lovelace B) Marie Curie C) Radia Perlman  D) Rosa Franklin")
+        answer = input ("Your answer : ")
+        if answer.upper() == "B":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+    elif question == 8 :
+        print("Who was famous for her work on radioactivity?")
+        print("A) Grace Hopper B) Amelia Earhart C) Marie Curie D) Rosa Parks ")
+        answer = input ("Your answer : ")
+        if answer.upper() == "C":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+    elif question == 9 :
+        print("Who developed FLOW-MATIC and COBOL(2 programming languages)?")
+        print("A) Katherine Johnson B) Dr.Nergis C) Radia Perlman  D) Grace Hopper")
+        answer = input ("Your answer : ")
+        if answer.upper() == "D":
+            print("Correct!")
+            score = score + 1
+        else:
+                print("Wrong!")
+                
+    if answer.lower() == "quit":
+                                print("Your score is " + str(score) )
+                                break
+
+                
+                
+            
+                

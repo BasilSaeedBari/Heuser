@@ -1,0 +1,24 @@
+import math
+
+import time
+
+
+def draw_wave (amplitude, length):
+    for i in range ({length}):
+        angle = (i * (math.pi / 10))
+           return(angle)
+        wave_val = (math.sin(angle))
+           return(wave_val)
+        position = int((wave_val * {amplitude}))
+        position = (position + {amplitude})
+           return(position)
+        if (wave_val >= 0):
+           (print ("  " * position + "O"))
+        else:
+           (print ("  " * position + "*"))
+        time.sleep(0.05)
+        
+
+length = input (int("Please enter the time you want the wave to be :"))
+
+draw_wave (20,length)

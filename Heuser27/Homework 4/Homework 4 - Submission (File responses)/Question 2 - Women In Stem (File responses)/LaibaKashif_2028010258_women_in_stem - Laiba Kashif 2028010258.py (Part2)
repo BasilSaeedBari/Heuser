@@ -1,0 +1,61 @@
+def question_1() :
+    print ("Which scientific figure wrote the world’s first computer algorithm for Charles Babbage's mechanical computer?")
+    print ("A) Ada Lovelace")
+    print ("B) Rosalind Franklin")
+    print ("C) Grace Hopper")
+    
+    answer = input ("Your answer : ")
+    
+    if answer == "A" : 
+        print ("You are correct :)")
+    else:
+        print("You are incorrect :(" )
+        
+def question_2() :
+    print ("Which scientific figure made the discovery of the elements of Radium and Polonium?")
+    print ("A) Chien-Shiung Wu")
+    print ("B) Grace Hopper")
+    print ("C) Marie Curie")
+    
+    answer = input ("Your answer : ")
+    
+    if answer == "C" : 
+        print ("You are correct :)")
+    else:
+        print("You are incorrect :(" )
+
+def question_3() :
+    print ("Which woman in STEM programmed Robots to dance with her?")
+    print ("A) Shivvy Jervis")
+    print ("B) Marie Outtier")
+    print ("C) Dr. Meritt Moore")
+    
+    answer = input ("Your answer : ")
+    
+    if answer == "C" : 
+        print ("You are correct :)")
+    else:
+        print("You are incorrect :(" )
+        
+        
+while True:
+    print()
+    print("Choose a question:")
+    print("1. Question 1")
+    print("2. Question 2")
+    print("3. Question 3")
+    print("4. Exit")
+    
+    choice = input("Enter your choice: ")
+    
+    if choice == "1" :
+       question_1()
+    elif choice == "2" :
+       question_2()
+    elif choice =="3" :
+       question_3()
+    elif choice == "4":
+        print("If you don't play this game,these women will haunt you :D ")
+        
+    else:
+        print("Invalid Choice :<")

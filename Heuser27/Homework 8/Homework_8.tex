@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,enumitem,xcolor,tcolorbox,hyperref,fancyhdr}
+\definecolor{navy}{HTML}{14213D}\definecolor{orng}{HTML}{C25B12}
+\hypersetup{colorlinks=true,urlcolor=orng}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\pagestyle{fancy}\fancyhf{}\lhead{CS CRP -- Heuser College}\rhead{Sessions 10 \& 11}\cfoot{\thepage}
+\newtcolorbox{term}[1]{colback=navy!6,colframe=navy,fonttitle=\bfseries,title=#1,boxrule=0.6pt,arc=2pt}
+\newtcolorbox{warn}{colback=orng!8,colframe=orng,boxrule=0.6pt,arc=2pt}
+\newcommand{\hw}[2]{{\Large\bfseries\color{navy} #1}\\[2pt]{\large #2}\\[-4pt]\rule{\textwidth}{1.2pt}}
+\begin{document}
+\hw{Homework 8}{An Unconventional Portfolio Website}
+\textbf{Course:} CS CRP \quad \textbf{Based on:} Session 10 and Session 11 \quad \textbf{Requires:} Homework 7
+
+\section*{Goal}
+Use AI, coding agents, and the tools taught so far to build a personal portfolio that looks and navigates like nothing a normal website does. This homework tests problem solving and design thinking: making something not yet explored.
+
+\begin{term}{Key words you must know}
+\textbf{Portfolio:} a showcase of who you are and what you have made.\\
+\textbf{Static website:} every visitor sees the same fixed files (HTML, CSS, JavaScript). No server or database. GitHub Pages can host it.\\
+\textbf{Conventional elements:} the usual parts of a website: header, footer, navigation bar.\\
+\textbf{href:} the HTML link attribute that sends a visitor to another page.\\
+\textbf{Coding agent:} an AI tool that writes, edits and fixes code from your instructions.\\
+\textbf{Color scheme:} the set of colors used across the site.
+\end{term}
+
+\section*{Required}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Static website only.} No server code or database. It must work when hosted on GitHub Pages.
+\item \textbf{Unconventional color scheme} with \textbf{at least 3 unique colors}. Avoid the default white-and-blue look.
+\item \textbf{An image of yourself}, placed as a meaningful part of the design.
+\item \textbf{No traditional website elements:} no header, no footer, no navigation bar.
+\item \textbf{Unconventional navigation.} Visitors must move between pages in a way that is not a menu or link list.
+\item \textbf{Animations.} Something must move, react or change.
+\item \textbf{Unique fonts.} Use at least one non-default font, such as a Google Font.
+\item \textbf{A link (\texttt{href}) to your Homework 7 website} (your hosted Homework 6 page).
+\item \textbf{Host it on GitHub Pages} in your \texttt{Heuser} repo, for example in \texttt{CS\_CRP/Homework\_8/}.
+\end{enumerate}
+
+\section*{Example (you may NOT use this)}
+\begin{warn}
+\textbf{Space theme.} A picture of you is the sun in the middle. Planets rotate around it, and each planet is an \texttt{href} to another page of the same website. This breaks the usual layout and the usual navigation. It is shown only to explain the thinking. Do not copy it, and do not use a space or planets theme at all.
+\end{warn}
+Come up with your own world: what would navigation look like in a city, a kitchen, a game, a forest, a machine?
+
+\section*{Bonus points}
+\begin{itemize}[leftmargin=*]
+\item A section about \textbf{achievements from your personal life}.
+\item A dedicated section about your \textbf{aspirations}: what you want to create.
+\end{itemize}
+
+\section*{Tips for working with AI}
+\begin{itemize}[leftmargin=*]
+\item Describe your idea in detail: theme, colors, how visitors move, what animates.
+\item Test in the browser after every change. Read the code and be able to explain it.
+\item Use Git: commit after each working step so you can go back if something breaks.
+\end{itemize}
+
+\section*{Submit}
+\begin{itemize}[leftmargin=*]
+\item Form link: \url{https://forms.gle/C7GCquwfFcjYBnHW9}
+\item Your live GitHub Pages link and your repository link.
+\item Confirm the Homework 7 link works from your site.
+\item Two or three sentences explaining your concept and why it is unconventional - This must be added in the website itself.
+\end{itemize}
+
+\section*{Checklist}
+\begin{tabular}{@{}ll@{}}
+$\square$ Static, hosted on GitHub Pages & $\square$ 3+ unique colors\\
+$\square$ Image of yourself & $\square$ No header, footer or nav bar\\
+$\square$ Unconventional navigation & $\square$ Animations and unique fonts\\
+$\square$ Link to Homework 7 site & $\square$ Bonus: achievements / aspirations\\
+\end{tabular}
+\end{document}

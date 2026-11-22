@@ -1,0 +1,45 @@
+
+
+Name1 ='Marie Curie'
+
+Name2 ='Ada Lovelace'
+
+Name3 ='Katherine Johnson'
+
+print ("Hello! This is a virtual muesuem used to display facts about the top 3 women in STEM. Here are your options," " Name1 = Marie curie, " " Name2 = Ada Lovelace, "  " Name3 = Katherine Jhonson")
+
+Option = input ("Please enter either of the three options:  ")
+
+Continue = '1'
+
+
+while Continue == '1':
+      if (Option == 'Name1'):
+          print ("Marie Curie: The Architecture of nuclear physics \nHistorical and scientific context")
+          print ("In the late 19th century, physics was dominated by the beleif that the atom was the indivisible, immutable foundation of matter. Following Henri Becquerel's 19xx discovery of uranium rays, Marie curie chose to investigate these emissions for her doctoral thesis. Operating out of a poorly insulated, damp shed at the ESPCI Paris, she faced severe institutional skepticism as a female researcher in a male-dominated academy.")
+          print ("Experimental Methodology and analytical Framework:")
+          print ("Piezoelectric Quartz Electrometer: \nUtilizing a device engineered by her husband, Pierre Curie, and his brother Jacques, she measured the extremely weak electrical currents conducted through air that had been exposed to uranium rays")
+          print ("Atomic Property Hypothesis: \nHer precise measurements revealed that the activity of uranium emissions depended solely on the amount of uranium present. This led to her revoulutionary hypothesis: radioactivity was not the result of an interaction between molecules, but an atomic prpperty inherent to the element itself.")
+          print ("Structural impact and systemic legacy: \nMarie curie became the first women to win a Noble prize, the first person to win two Nobel prizes, and the only individual to win them in two distinct scientific disciplines. (physics, in 1903; Chemistry in 1911)")
+          Continue = input("Enter 0 to quit and 1 to continue:  ")
+          Option = input ("Enter another option:  ")
+      elif (Option == 'Name2'):
+          print ("Ada Lovelace: The genesis of computational science \nHistorical and scientific context \nThe mid-19th century industrial revolution focused heavily on mechanical automation. Charles Babbage designed the Analytical Engine, a theoretical, steam-powered mechanical calculator. While Babbage conceptualised the machine strictly as a too; for executing complex arithmetic calculations, Ada Lovelace, a gifted mathematician looked past the mechanical gears to see the broader philosophical implications of symbolic manipulation.")
+          print ("Mathematical logic and conceptual innovations \nSymbolic abstraction \nLovelace recognised that the engine's operational cards could manipulate symbols rather than just numbers. She realised that if the rules of a medium could be translated into abstract numerical logic, the machine could compose music, generate graphics, and assist scientific inquiry.")
+          print ("Algorithmic construction: \nIn note G, Lovelace drafted a highly structured, step-by-step mathematical plan for the machine to calculate Bernoulli numbers. This wasn't a simple calculation script; it was a complex architecture featuring variables, data storage, and operational instructions.")
+          print ("Structural Impact and systemic legacy: \nLovelace is celebrated as the world's first computer programmer. while the analytical engine was never built in her lifetime due to funding and engineering limits, her 'notes' served as a conceptual blueprint for early 20th century computer scientists.")
+          Continue = input("Enter 0 to quit and 1 to continue:  ")
+          Option = input ("Enter another option:  ")
+      elif (Option == 'Name3'):
+          print ("Katherine Jhonson: The mathematics of space Exploration \nHistorical and scientific context: \nDuring the cold war space race, NASA faced the monumental task of sending humans into orbit and safely returning them to Earth. The mathematics required for these journeys did not yet exist in automated systems. Jhonson worked within the West Area Computing unit, a segregated division of Black female mathematicians who faced systemis racial and gender discrimination under Jim Crow laws.")
+          print ("Mathematical Methodology and Ballistic calculation: \nAzimuth and trajectory analysis: \nJhonson calculated the precise paths for Aln Shepard's 1961 suborbital flight. she utilized geometry and differential equations to map out the exact minute of launch, the arc of flight, and the pinpoint tracking coordinates required for ocean rescue teams.")
+          print ("Lunar Module Rendezvous: \nFor the 1969 Apollo 11 mission, Jhonson calculated the trajectory that synced the lunar module with the command module, ensuring astronauts could return home safely from the moon's surface.")
+          print ("Structural impact and systemic legacy: \nJhonson's mathematical precision proved that manual human calculation could safely navigate human spaceflight, setting the foundation for the space shuttle program and satellite communications. She received the Presidential medal of freedom in 2015, and NASA na,ed the Katherine G.Jhonson Computational research faci;lity in her honor.")
+          Continue = input("Enter 0 to quit and 1 to continue:  ")
+          Option = input ("Enter another option:  ")
+
+print ("Bye")
+    
+  
+  
+  

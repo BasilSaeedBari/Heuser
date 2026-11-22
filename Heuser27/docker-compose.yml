@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  heuser27:
+    image: ghcr.io/basilsaeedbari/heuser27:main
+    container_name: heuser27_web
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Karachi
+      - PORT=8090
+      - ADMIN_PASSWORD=heuser27admin
+      # Set a stable SESSION_SECRET in production so admin sessions survive container restarts:
+      # - SESSION_SECRET=change-this-to-a-random-string
+    volumes:
+      - heuser27_data:/app/data
+    networks:
+      - proxy-net
+    labels:
+      caddy: heuser27.basilsaeedbari.com
+      caddy.reverse_proxy: "{{upstreams 8090}}"
+
+networks:
+  proxy-net:
+    external: true
+
+volumes:
+  heuser27_data:
+    name: heuser27_data
