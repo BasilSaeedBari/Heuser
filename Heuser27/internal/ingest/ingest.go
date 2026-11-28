@@ -87,6 +87,11 @@ var defaultHWDefs = map[int]HomeworkDefinition{
 		Subtitle: "Full-stack Python backend deployed to Render / PythonAnywhere / Vercel",
 		Kind:     "backend_app",
 	},
+	10: {
+		Title:    "Homework 10: Embedded ESP32 in Wokwi",
+		Subtitle: "Single-technology Wokwi hardware simulation linked to backend server",
+		Kind:     "embedded",
+	},
 }
 
 var (
@@ -604,7 +609,7 @@ func buildSubmission(
 			continue
 		}
 
-		if strings.Contains(kl, "enjoy") || strings.Contains(kl, "how hard") {
+		if strings.Contains(kl, "enjoy") || strings.Contains(kl, "how hard") || strings.Contains(kl, "prefer") {
 			feedbacks = append(feedbacks, fmt.Sprintf("%s: %s", k, v))
 			continue
 		}
@@ -642,15 +647,26 @@ func buildSubmission(
 			continue
 		}
 
-		// Extract all URLs in cell
+		// Extract all URLs in cell (also handle bare hostnames like MBilal9509.pythonanywhere.com)
 		foundURLs := reAnyURL.FindAllString(v, -1)
+		if len(foundURLs) == 0 {
+			trimmed := strings.TrimSpace(v)
+			if !strings.Contains(trimmed, " ") && (strings.Contains(trimmed, ".pythonanywhere.com") ||
+				strings.Contains(trimmed, ".onrender.com") ||
+				strings.Contains(trimmed, ".vercel.app") ||
+				strings.Contains(trimmed, ".netlify.app") ||
+				strings.Contains(trimmed, ".github.io") ||
+				strings.Contains(trimmed, "wokwi.com/")) {
+				foundURLs = []string{"https://" + trimmed}
+			}
+		}
 		for _, u := range foundURLs {
-			u = strings.TrimRight(u, ".,;)")
+			u = strings.TrimRight(u, ".,;)\u2060\u200b\ufeff")
 			extraURLs = append(extraURLs, LabeledURL{Label: k, URL: u})
 		}
 	}
 
-	// Categorize primary / secondary URLs for HW 4, 5, 6, 7, 8, 9
+	// Categorize primary / secondary URLs for HW 4+
 	if hwNum >= 4 {
 		for _, eu := range extraURLs {
 			u := eu.URL
@@ -659,13 +675,26 @@ func buildSubmission(
 				continue
 			}
 			isRepo := strings.Contains(ul, "github.com/") && !strings.Contains(ul, ".github.io")
+			isWokwi := strings.Contains(ul, "wokwi.com/")
 			isPages := strings.Contains(ul, ".github.io") ||
 				strings.Contains(ul, "onrender.com") ||
 				strings.Contains(ul, "pythonanywhere.com") ||
 				strings.Contains(ul, "vercel.app") ||
 				strings.Contains(ul, "netlify.app")
 
-			if hwNum >= 7 {
+			if hwNum == 10 {
+				if isWokwi && sub.PrimaryURL == "" {
+					sub.PrimaryURL = u
+					sub.Playable = true
+				} else if isPages && sub.SecondaryURL == "" {
+					sub.SecondaryURL = u
+					sub.Playable = true
+				} else if !isRepo && sub.PrimaryURL == "" {
+					sub.PrimaryURL = u
+				} else if sub.SecondaryURL == "" && u != sub.PrimaryURL && !isRepo {
+					sub.SecondaryURL = u
+				}
+			} else if hwNum >= 7 {
 				if isPages && sub.PrimaryURL == "" {
 					sub.PrimaryURL = u
 					sub.Playable = true

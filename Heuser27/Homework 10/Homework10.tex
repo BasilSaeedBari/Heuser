@@ -1,0 +1,236 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[colorlinks=true,urlcolor=blue!60!black,linkcolor=black]{hyperref}
+
+\definecolor{hc}{HTML}{14284A}
+\definecolor{ac}{HTML}{0F9D8A}
+\setlist{itemsep=2pt,topsep=4pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\textcolor{hc}{CS CRP -- Heuser College}}
+\fancyhead[R]{\textcolor{hc}{Homework 10}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\titleformat{\section}{\Large\bfseries\color{hc}}{}{0pt}{}
+\titleformat{\subsection}{\large\bfseries\color{ac}}{}{0pt}{}
+
+\newtcolorbox{note}[1]{colback=ac!8,colframe=ac,fonttitle=\bfseries,title={#1},breakable}
+\newtcolorbox{proj}[2]{colback=hc!4,colframe=hc,fonttitle=\bfseries,title={#1 \hfill #2},breakable,before skip=8pt}
+
+\begin{document}
+
+\begin{center}
+{\Huge\bfseries\color{hc} Homework 10}\\[6pt]
+{\Large Your Own Embedded Project in Wokwi}\\[8pt]
+\textbf{Course:} CS CRP \quad \textbf{Based on:} Session 13 and Homework 9 \quad \textbf{Requires:} Homework 9\\
+\textbf{Due:} 30th November 2026 \quad (plan for 5 working days)
+\end{center}
+
+\section*{Goal}
+In Session 13 you learned how a tiny chip can sense and control the real world. In this homework you will build \textbf{one amazing embedded project} in the Wokwi simulator, using \textbf{only one technology, pushed to its full extent}. Then you will connect it to the website you built in Homework 9, so that your site shows your hardware work to the world.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Address} & \textbf{What the visitor sees}\\
+\midrule
+\texttt{yourname.website.com/} & Home page, now with a \textbf{fourth} button\\
+\texttt{.../game}, \texttt{.../portfolio}, \texttt{.../api} & Your Homework 9 pages (unchanged)\\
+\texttt{.../embedded} & \textbf{NEW:} your Homework 10 project page with the link to your circuit\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section*{Key words you must know}
+\begin{description}[leftmargin=1.2cm,style=nextline]
+\item[Simulator (Wokwi)] A website that pretends to be real electronics, so you can build and test circuits for free.
+\item[Sketch] The program (\texttt{setup()} and \texttt{loop()}) that runs on the ESP32.
+\item[Circuit diagram (\texttt{diagram.json})] The file that remembers which parts you placed and how they are wired.
+\item[Library] Ready-made code, for example for a screen or a sensor, that you add to your project.
+\item[Serial Monitor] The window where your ESP32 prints messages to you.
+\item[Share link] A public web address that lets anyone open your Wokwi project.
+\item[Single technology rule] Your project is built around one technology (for example I2C). Other parts may help, but they must not become a second technology.
+\item[Coding agent] An AI tool that writes, edits and fixes code. You must be able to explain every line it wrote.
+\end{description}
+
+\section*{Required}
+\begin{enumerate}
+\item \textbf{Pick one project} from the list in Part 1. You may not mix two projects.
+\item \textbf{Single technology, full extent.} Use only the technology named in your project, and use it deeply, not just once.
+\item \textbf{Works in Wokwi.} The simulation must start and run without errors from a fresh page load.
+\item \textbf{Clean and commented code.} Use meaningful names and short comments that explain each part.
+\item \textbf{Proof of life.} The Serial Monitor, a screen or the Logic Analyzer must clearly show your project working.
+\item \textbf{Use a coding agent} (any one you like). You must be able to explain every file it wrote.
+\item \textbf{Public Wokwi share link} that works for a person who is not logged in.
+\item \textbf{Website integration.} Add a new \texttt{/embedded} page and a fourth home-page button to your Homework 9 server.
+\item \textbf{No secrets.} Your repository is public. Never put Wi-Fi passwords, API keys or tokens in your code or on the page.
+\item \textbf{Homework 6, 8 and the old Homework 9 pages keep working.}
+\end{enumerate}
+
+\section*{Part 1: Choose your project}
+Pick \textbf{one} project. Each one is about a single technology. Read all ten before you decide.
+
+\begin{proj}{1. SPI: Touch Mini-Arcade and High-Score File System}{Technology: SPI only}
+\textbf{Wokwi parts:} ILI9341 SPI TFT display (with built-in SPI touch) and a microSD card module, sharing MOSI, MISO and SCK with separate CS pins.\\
+\textbf{Build:} A playable touch game (Snake, Pong or Reaction Tap) on the colour screen. It saves and loads a high-score leaderboard from the SD card. This pushes multi-device SPI bus sharing and fast screen updates.
+\end{proj}
+
+\begin{proj}{2. I2C: Smart Room Monitor and Bus Collision Solver}{Technology: I2C only}
+\textbf{Wokwi parts:} SSD1306 OLED (0x3C), MPU6050 accelerometer/gyro (0x68 or 0x69), DS1307 real-time clock (0x68) and an I2C LCD1602 (0x27).\\
+\textbf{Build:} Run an I2C scanner on boot, solve the 0x68 address clash using the MPU6050 AD0 pin, and show a live tilt graph on the OLED and a digital clock on the LCD, all on just two wires.
+\end{proj}
+
+\begin{proj}{3. PWM: Smooth 4-Joint Robotic Arm and Colour Choreographer}{Technology: PWM only}
+\textbf{Wokwi parts:} 4 servo motors and 1 common-cathode RGB LED (with resistors).\\
+\textbf{Build:} Replace jerky servo snaps with smooth ease-in/ease-out motion across 4 joints, synchronised with an RGB mood indicator, running multi-step pick-and-place or dance routines.
+\end{proj}
+
+\begin{proj}{4. Wi-Fi: Live Pakistan Weather and Time Web Dashboard}{Technology: Wi-Fi only}
+\textbf{Wokwi parts:} ESP32 only (controlled from your browser and the Serial Monitor), using the Wokwi-GUEST network and the Wokwi IoT Gateway.\\
+\textbf{Build:} The ESP32 fetches live JSON weather (for example from Open-Meteo) and world time, while also hosting its own HTML dashboard where you click buttons to switch between Karachi, Lahore and Islamabad.\\
+\textit{Note:} Weather APIs are allowed in this homework. The Homework 9 ban applied only to that homework.
+\end{proj}
+
+\begin{proj}{5. UART: Custom Packet Protocol and Multi-Serial Router}{Technology: UART only}
+\textbf{Wokwi parts:} ESP32 (TX1 wired to RX2 and TX2 wired to RX1 in \texttt{diagram.json}) and the Wokwi virtual Logic Analyzer.\\
+\textbf{Build:} Design a reliable packet protocol (start byte, length, command, checksum, ACK/NACK retry) between two hardware UART ports, test corrupted bytes, and decode the live bit frames on the Logic Analyzer.
+\end{proj}
+
+\begin{proj}{6. ADC: 4-Channel Live Sensor Scope and Noise Filter}{Technology: ADC only}
+\textbf{Wokwi parts:} Analog joystick (X/Y), photoresistor (LDR), NTC temperature sensor and a potentiometer, viewed on Wokwi's Serial Plotter.\\
+\textbf{Build:} Sample 4 analog sensors with calibrated millivolt conversion (\texttt{analogReadMilliVolts}), add a rolling-average noise filter, map joystick dead zones, and plot live waveforms like a mini oscilloscope.
+\end{proj}
+
+\begin{proj}{7. GPIO and Interrupts: Microsecond Reflex Duel and Simon Game}{Technology: GPIO + hardware interrupts}
+\textbf{Wokwi parts:} 4 pushbuttons and 6 LEDs (with resistors).\\
+\textbf{Build:} A two-player reaction duel and a memory-sequence game. Every press triggers a debounced interrupt service routine (\texttt{attachInterrupt}, \texttt{INPUT\_PULLUP}) that measures reaction time to the microsecond without missing a tap.
+\end{proj}
+
+\begin{proj}{8. RMT / NeoPixels: 16x16 Matrix Retro Animator}{Technology: WS2812B single-wire protocol}
+\textbf{Wokwi parts:} 16x16 NeoPixel matrix (256 RGB LEDs controlled from 1 GPIO pin).\\
+\textbf{Build:} Map 2D (x, y) coordinates onto the snake-wired grid to draw Conway's Game of Life, scrolling text banners and smooth rainbow plasma animations over one wire.
+\end{proj}
+
+\begin{proj}{9. BLE: Custom Smart Beacon and GATT Server}{Technology: BLE only}
+\textbf{Wokwi parts:} ESP32 only (inspect through the Serial Monitor).\\
+\textbf{Build:} Turn the ESP32 into a low-power BLE peripheral with custom services and characteristics (Read, Write, Notify), simulating a lost-item tracker or fitness band that sends telemetry packets.
+\end{proj}
+
+\begin{proj}{10. CAN Bus (TWAI): Virtual Car Dashboard Bus Simulator}{Technology: CAN only}
+\textbf{Wokwi parts:} ESP32 (TWAI controller in self-test / no-ack loopback mode using \texttt{driver/twai.h}) and the Wokwi virtual Logic Analyzer.\\
+\textbf{Build:} Simulate car ECUs broadcasting prioritised frames (0x100 Brake Alert, 0x200 Engine RPM, 0x300 Coolant Temp), test priority arbitration and ID filtering, and inspect the raw frames on the Logic Analyzer.
+\end{proj}
+
+\begin{note}{Read this before you choose}
+Wokwi does not simulate every feature of real chips. Projects 8, 9 and 10 are the most challenging, so check the Wokwi documentation (\texttt{docs.wokwi.com}) first to see what is supported. Projects 1 to 7 are the safest choices. A harder project is not automatically better: a working, polished project beats an unfinished ambitious one.
+\end{note}
+
+\subsection*{What does ``full extent'' mean?}
+Do not just show the technology once. Explore it: handle errors, test unusual cases, add a second feature that uses the same technology, and show clear proof on screen. For example, an I2C project that only reads one sensor is not full extent. An I2C project that scans the bus, fixes an address clash and drives several devices is.
+
+\section*{Part 2: Plan before you build}
+Write down the following in a short text file called \texttt{plan.txt}, before you open Wokwi.
+\begin{enumerate}
+\item Which project and which technology you chose.
+\item The list of Wokwi parts you need.
+\item A pin table: which ESP32 pin connects to which part (check the datasheet for pin limits).
+\item Your idea in 3--4 sentences: what your project does and how you will use the technology to its full extent.
+\item Three milestones you will finish (for example: wiring, first output, final polish).
+\end{enumerate}
+
+\section*{Part 3: Build with your coding agent}
+Work in small steps and test after every step. Do not ask the agent for everything in one giant request.
+\begin{enumerate}
+\item \textbf{Step 1: New project.} Go to \texttt{wokwi.com/esp32}, start a new ESP32 project and sign in so you can save it.
+\item \textbf{Step 2: Wire it.} Add your parts and connect them following your pin table. Ask the agent for the \texttt{diagram.json} if you want.
+\item \textbf{Step 3: Smallest test.} Write the tiniest program that proves the wiring works (a blink, a scan or a single message).
+\item \textbf{Step 4: Core feature.} Build the main behaviour of your project.
+\item \textbf{Step 5: Go deeper.} Add the extra features that push your technology to its full extent.
+\item \textbf{Step 6: Proof.} Add clear output: Serial Monitor messages, an on-screen display or a Logic Analyzer view.
+\item \textbf{Step 7: Polish.} Clean the code, add comments, and test from a fresh page reload.
+\end{enumerate}
+
+\begin{note}{Tips for working with AI}
+\begin{itemize}
+\item Tell the agent exactly which parts you are using and that it must run in the Wokwi ESP32 simulator.
+\item Paste any Serial Monitor or compile error back to the agent together with your code.
+\item Ask the agent to explain each part. You will be asked to explain it.
+\item Save your Wokwi project often. If the agent confuses itself, start a fresh chat and share only the files it needs.
+\end{itemize}
+\end{note}
+
+\section*{Part 4: Share your circuit}
+\begin{enumerate}
+\item Make sure your project is saved in your Wokwi account.
+\item Use the Share button in Wokwi to get the project link.
+\item Open the link in a private (incognito) window and check that your project loads and runs.
+\item Take a clear screenshot of your running circuit with the proof of life visible.
+\end{enumerate}
+
+\section*{Part 5: Add it to your Homework 9 website}
+Work inside your \textbf{existing} \texttt{CS\_CRP/Homework\_9} folder. Do not create a new repository and do not touch the Homework 6 and Homework 8 folders.
+\begin{enumerate}
+\item \textbf{New folder.} Add an \texttt{embedded/} folder with your page files (and your screenshot) next to the other page folders.
+\item \textbf{New route.} Add a \texttt{/embedded} route to your Python backend.
+\item \textbf{The page must show:} the project title, the technology you used, the parts list, your 3--4 sentence explanation, your screenshot, and a big button that opens your Wokwi share link.
+\item \textbf{Home page.} Add a fourth button that goes to \texttt{/embedded}.
+\item \textbf{Way back.} The new page needs a button back to the home page.
+\item \textbf{Test locally,} then commit with a message such as ``Add Homework 10 embedded page'', push to \texttt{main}, and let whatever service you are using redeploy.
+\end{enumerate}
+
+\begin{note}{Careful with secrets}
+A Wokwi link is public, so it must never contain a real Wi-Fi password or API key. Wokwi's built-in \texttt{Wokwi-GUEST} network needs no password.
+\end{note}
+
+\section*{Part 6: Final test}
+\begin{itemize}
+\item Open your Wokwi link in a private window and run the simulation from the start.
+\item Open every page on your live site on your phone as well as your computer.
+\item Click the new home-page button, the Wokwi button and the way back.
+\item Check that \texttt{/game}, \texttt{/portfolio} and \texttt{/api} still work.
+\item Open your site once a few minutes before submitting, because most website deployment free plan sleeps when nobody visits.
+\end{itemize}
+
+\section*{Bonus points}
+\begin{itemize}
+\item Try embedding the Wokwi simulation directly on your page, if Wokwi allows it. Otherwise keep the screenshot and button.
+\item Add a short demo GIF or video on the \texttt{/embedded} page.
+\item Add a second smart feature using the \emph{same} technology.
+\item Write a short ``How it works'' section on the page with a simple diagram of your circuit.
+\end{itemize}
+
+\section*{Submit}
+\begin{itemize}
+\item Form link: \url{https://forms.gle/em2GS9QpF3yYUcD28}
+\item Your live website link and the link to your \texttt{/embedded} page.
+\item Your public Wokwi share link.
+\item Your GitHub repository link and the link to \texttt{CS\_CRP/Homework\_9}.
+\item The project you chose, the technology used, and the coding agent you used.
+\item A screenshot of your running Wokwi circuit.
+\item Two or three sentences explaining how you pushed the technology to its full extent. These must also be on the \texttt{/embedded} page.
+\end{itemize}
+
+\section*{Checklist}
+\begin{center}
+\begin{tabularx}{\textwidth}{XX}
+$\square$ One project chosen from the list & $\square$ Only one technology, used in depth\\
+$\square$ Plan written before building & $\square$ Works from a fresh reload in Wokwi\\
+$\square$ Clear proof of life on screen & $\square$ Code is clean and commented\\
+$\square$ Public Wokwi link works & $\square$ \texttt{/embedded} page live on your website\\
+$\square$ Fourth home-page button added & $\square$ Way back to the home page\\
+$\square$ Homework 6, 8, 9 pages still work & $\square$ No secrets in GitHub\\
+$\square$ Coding agent used and named & $\square$ Explanation text written on the page\\
+\end{tabularx}
+\end{center}
+
+\end{document}

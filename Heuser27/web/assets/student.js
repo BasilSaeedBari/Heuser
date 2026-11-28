@@ -117,13 +117,15 @@
 
     const actionButtons = [];
     if (sub.primary_url && !sub.is_local_only_url) {
+      const primaryLabel = sub.hw_number === 10 ? 'Open Wokwi Circuit' : 'Open Submission';
       actionButtons.push(
-        `<a class="btn btn-primary btn-sm" href="${esc(sub.primary_url)}" target="_blank" rel="noopener noreferrer">${icons.external} Open Submission</a>`
+        `<a class="btn btn-primary btn-sm" href="${esc(sub.primary_url)}" target="_blank" rel="noopener noreferrer">${icons.external} ${primaryLabel}</a>`
       );
     }
     if (sub.secondary_url) {
+      const secondaryLabel = sub.hw_number === 10 ? 'Open Live Website' : 'View Repository / Secondary';
       actionButtons.push(
-        `<a class="btn btn-ghost btn-sm" href="${esc(sub.secondary_url)}" target="_blank" rel="noopener noreferrer">${icons.code} View Repository / Secondary</a>`
+        `<a class="btn btn-ghost btn-sm" href="${esc(sub.secondary_url)}" target="_blank" rel="noopener noreferrer">${icons.code} ${secondaryLabel}</a>`
       );
     }
 
